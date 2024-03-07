@@ -1,6 +1,6 @@
 # This script contains a fn that will rebuild the buffer segments from `split-file.ps1`
 
-# It searches the cwd for files matching the `$inFilePattern` which defaults to filenames that are just digits
+# It searches the cwd for files matching filenames that are incrementing digits
 # The output should resemble the original file before it was split (contents reassembled in correct order)
 
 # Invoke like this:
