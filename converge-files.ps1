@@ -4,21 +4,16 @@
 # The output should resemble the original file before it was split (contents reassembled in correct order)
 
 # Invoke like this:
-# .\converge-files.ps1 -inFilePattern "" -outFile "reassembled_file.zip" -buffSize 4MB
+# .\converge-files.ps1 -outFile "reassembled_file.zip" -buffSize 4MB
 
 param(
-    [string]$inFilePattern,
     [string]$outFile,
     [int]$buffSize = 4MB
 )
 
 function converge {
-  param(
-      [string]$inFilePattern,
-      [string]$outFile
-  )
 
-  $files = Get-ChildItem $inFilePattern | Where-Object { $_.Name -match '^\d+$' } | Sort-Object { [int]$_.Name }
+  $files = Get-ChildItem | Where-Object { $_.Name -match '^\d+$' } | Sort-Object { [int]$_.Name }
 
   $outStream = [System.IO.File]::OpenWrite($outFile)
 
@@ -34,5 +29,6 @@ function converge {
   Write-Output "Re-assembled file written to $outFile"
 }
 
-# Calls the converge function with the provided parameters
-converge -inFilePattern $inFilePattern -outFile $outFile -buffSize $buffSize
+# splatting the $PSBoundParameters variable will pass all the parameter arguments
+# that were originally passed to the script, to the `converge` function
+converge @PSBoundParameters
