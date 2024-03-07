@@ -11,26 +11,25 @@
 # ######################################################## #
 
 # To Use:
-# split-file.ps1 -inFile "C:\path\to\your\file.zip" -outPrefix "" -buffSize 4MB
+# split-file.ps1 -inFile "C:\path\to\your\file.zip" -buffSize 4MB
 
 param(
   [string]$inFile,
-  [string]$outPrefix = "",
   [int]$buffSize = 4MB
 )
 
-function split($inFile,  $outPrefix, [Int32] $buffSize){
+function split($inFile, [Int32] $buffSize){
 
   $stream = [System.IO.File]::OpenRead($inFile)
   $chunkNum = 1
   $barr = New-Object byte[] $buffSize
 
   while( $bytesRead = $stream.Read($barr,0,$buffsize)){
-    $outFile = "$outPrefix$chunkNum"
-    $ostream = [System.IO.File]::OpenWrite($outFile)
-    $ostream.Write($barr,0,$bytesRead);
-    $ostream.close();
-    Write-Output "wrote $outFile"
+    $outFile = "$chunkNum"
+    $outStream = [System.IO.File]::OpenWrite($outFile)
+    $outStream.Write($barr,0,$bytesRead);
+    $outStream.close();
+    Write-Output "wrote chunk $outFile to file"
     $chunkNum += 1
   }
 }
