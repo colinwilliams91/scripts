@@ -1,4 +1,7 @@
 # Copied from this [learn.microsoft blog](https://learn.microsoft.com/en-us/archive/blogs/mediaandmicrocode/get-computersnearme)
+# How to make into a module:
+## change file extension from .ps1 to .psm1
+### [more steps README](https://github.com/PoshCode/ModuleBuilder?tab=readme-ov-file#the-modulebuilder-module)
 
 function Get-ComputersNearMe
 {
