@@ -12,21 +12,29 @@ param(
 )
 
 function converge {
+  # Get the current working directory
+  $currentDir = (Get-Location).Path
+  # Construct the full path for the output file
+  $outFilePath = Join-Path -Path $currentDir -ChildPath $outFile
+
+  Write-Output "Current working directory: $currentDir"
+  Write-Output "Re-assembled file will be written to: $outFilePath"
 
   $files = Get-ChildItem | Where-Object { $_.Name -match '^\d+$' } | Sort-Object { [int]$_.Name }
 
-  $outStream = [System.IO.File]::OpenWrite($outFile)
+  $outStream = [System.IO.File]::OpenWrite($outFilePath)
 
   foreach ($file in $files) {
-      $inStream = [System.IO.File]::OpenRead($file.FullName)
-      $buffer = New-Object byte[] $buffSize
-      $bytesRead = $inStream.Read($buffer, 0, $buffSize)
+    $inStream = [System.IO.File]::OpenRead($file.FullName)
+    $buffer = New-Object byte[] $buffSize
+    while ($bytesRead = $inStream.Read($buffer, 0, $buffSize)) {
       $outStream.Write($buffer, 0, $bytesRead)
-      $inStream.Close()
-  }
+    }
+    $inStream.Close()
+}
 
   $outStream.Close()
-  Write-Output "Re-assembled file written to $outFile"
+  Write-Output "Re-assembled file written to $outFilePath"
 }
 
 # splatting the $PSBoundParameters variable will pass all the parameter arguments
