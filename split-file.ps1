@@ -20,12 +20,13 @@ param(
 
 function split($inFile, [Int32] $buffSize){
 
+  $currentDir = (Get-Location).Path  # Get the current working directory
   $stream = [System.IO.File]::OpenRead($inFile)
   $chunkNum = 1
   $barr = New-Object byte[] $buffSize
 
   while( $bytesRead = $stream.Read($barr,0,$buffsize)){
-    $outFile = "$chunkNum"
+    $outFile = Join-Path -Path $currentDir -ChildPath "$chunkNum"  # Combine with current directory
     $outStream = [System.IO.File]::OpenWrite($outFile)
     $outStream.Write($barr,0,$bytesRead);
     $outStream.close();
