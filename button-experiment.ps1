@@ -19,9 +19,9 @@ $ErrorIcon = [Windows.MessageBoxImage]::Information
 
 $Prompt1 = [Windows.MessageBox]::Show("Please choose an option:", "Submit User Response", $Button, $ErrorIcon)
 
-$Output = "$CurrentDir\UserResponse.txt"
+$Output = "$CurrentDir\user-response.txt"
 
-Set-Content -Path $Output -Value $Prompt1
+Set-Content -Path $Output -Value "User Selection: $Prompt1"
 
 # Stop current session log file
 Stop-Transcript
