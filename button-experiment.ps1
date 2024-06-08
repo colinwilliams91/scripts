@@ -15,6 +15,13 @@ if (-not (Test-Path -Path $LogsDir)) {
 Start-Transcript -OutputDirectory "$CurrentDir"
 
 $Button = [Windows.MessageBoxButton]::YesNoCancel
+$ErrorIcon = [Windows.MessageBoxImage]::Error
+
+$Prompt1 = [Windows.MessageBox]::Show("Please choose an option:", "Submit User Response", $Button, $ErrorIcon)
+
+$Output = "$CurrentDir\UserResponse.txt"
+
+Set-Content -Path $Output -Value $Prompt1
 
 # Stop current session log file
 Stop-Transcript
