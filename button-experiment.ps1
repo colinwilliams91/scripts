@@ -12,10 +12,10 @@ if (-not (Test-Path -Path $LogsDir)) {
 }
 
 # Start current session log file
-Start-Transcript -OutputDirectory "$CurrentDir"
+Start-Transcript -OutputDirectory "$LogsDir"
 
 $Button = [Windows.MessageBoxButton]::YesNoCancel
-$ErrorIcon = [Windows.MessageBoxImage]::Error
+$ErrorIcon = [Windows.MessageBoxImage]::Information
 
 $Prompt1 = [Windows.MessageBox]::Show("Please choose an option:", "Submit User Response", $Button, $ErrorIcon)
 
