@@ -1,5 +1,8 @@
 # Experimenting with Win Buttons
 
+# Load System.Windows.Forms assembly (needed?)
+Add-Type -AssemblyName PresentationFramework
+
 $CurrentDir = (Get-Location).Path
 $LogsDir = "$CurrentDir\logs"
 
