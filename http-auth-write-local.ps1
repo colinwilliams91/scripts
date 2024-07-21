@@ -1,11 +1,16 @@
-# ExportData.ps1
-# TODO: review
-# TODO: make $Token default "" or something if not given
+########################################################
+# Emulates a `curl` command with Bash ##################
+# Expecting the user to know which arguments to pass ###
+########################################################
+# --> Makes a REST HTTP request to specific URL ########
+# --> Applying Authorization Bearer Token if needed ####
+# --> Writes to specified output file type #############
+########################################################
 
-function Export-Data {
+function Export-Rest-Data {
     param (
-        [Parameter(Mandatory=$true)]
-        [string]$Token,
+        [Parameter(Mandatory=$false)]
+        [string]$Token = "",
 
         [Parameter(Mandatory=$true)]
         [string]$Url,
@@ -14,8 +19,12 @@ function Export-Data {
         [string]$OutFile
     )
 
-    $headers = @{
-        Authorization = "Bearer $Token"
+    if ($Token) {
+        $headers = @{
+            Authorization = "Bearer $Token"
+        }
+    } else {
+        $headers = @{}
     }
 
     try {
